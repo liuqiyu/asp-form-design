@@ -1,32 +1,50 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <el-header class="asp-header">
+      <h1 class="logo">卓望-表单设计器</h1>
+    </el-header>
+    <el-container class="asp-container">
+      <router-view />
+    </el-container>
+    <el-footer class="asp-footer">Powered by asp-form-design</el-footer>
   </div>
 </template>
 
 <style lang="scss">
+html,
+body,
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+#app {
+  display: flex;
+  flex-direction: column;
+  .asp-header {
+    background-color: #1278f6;
+    display: flex;
+    flex: none;
+    justify-content: space-between;
+    align-items: center;
+    .logo {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 20px;
     }
+  }
+  .asp-container {
+    flex: 1;
+    height: 100%;
+  }
+  .asp-footer {
+    flex: none;
+    height: 30px !important;
+    line-height: 30px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 12px;
+    text-align: center;
+    color: #409eff;
+    background: #fafafa;
   }
 }
 </style>
