@@ -18,7 +18,16 @@ body,
   height: 100%;
   overflow: hidden;
 }
+*,
+:after,
+:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 #app {
+  background: #f5f7fa;
   display: flex;
   flex-direction: column;
   .asp-header {
