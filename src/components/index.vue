@@ -17,7 +17,27 @@
     <div class="center-container">
       <div class="btn-list"></div>
       <div class="form-container">
-        <div class="drag-form-list"></div>
+        {{data.list}}
+        {{model}}
+        <el-form ref="form"
+                 style="height: 100%"
+                 :model="model"
+                 label-width="80px">
+          <draggable class="components-row"
+                     style="height: 100%"
+                     v-model="data.list"
+                     v-bind="{group:'people', ghostClass: 'ghost',animation: 200, handle: '.drag-widget'}">
+
+            <transition-group name="fade"
+                              tag="div"
+                              class="drag-form-list">
+              <FormItem v-for="(component, index) in data.list"
+                        v-model="model[component.columnName]"
+                        :item="component"
+                        :key="index"></FormItem>
+            </transition-group>
+          </draggable>
+        </el-form>
       </div>
     </div>
     <div class="config-container"></div>
@@ -27,15 +47,39 @@
 <script>
 import Draggable from 'vuedraggable'
 import { basicComponents } from './componentsConfig'
+import FormItem from './form-item'
 export default {
   name: 'asp-form-design',
   data () {
     return {
-      basicComponents
+      basicComponents,
+      data: {
+        list: []
+      },
+      model: {}
+    }
+  },
+  created () {
+    this.initModel()
+  },
+  watch: {
+    'data.list' (val) {
+      console.log(val)
+      this.initModel()
     }
   },
   components: {
-    Draggable
+    Draggable,
+    FormItem
+  },
+  methods: {
+    // 初始化model
+    initModel (formCreate) {
+      this.data.list.forEach((item, index) => {
+        // 初始化数据
+        this.$set(this.model, item.columnName, null)
+      })
+    }
   }
 }
 </script>
@@ -90,6 +134,8 @@ $primary-background-color: #ecf5ff;
     }
   }
   .center-container {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     width: 100%;
     height: 100%;
@@ -106,6 +152,7 @@ $primary-background-color: #ecf5ff;
       border-bottom: 2px solid #e4e7ed;
     }
     .form-container {
+      flex: 1;
       overflow-y: auto;
       width: 100%;
       height: 100%;
